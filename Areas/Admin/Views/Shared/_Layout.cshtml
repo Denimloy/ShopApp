@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    @{await Html.RenderPartialAsync("_StylesPartial");}
+
+    <title>@ViewBag.Title</title>
+</head>
+<body class="hold-transition sidebar-mini layout-navbar-fixed">
+    <div class="wrapper">
+        @{await Html.RenderPartialAsync("_HeaderPartial");}
+
+        @{await Html.RenderPartialAsync("_MainSidebarPartial");}
+
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Admin/js/adminlte.min.js"></script>
+    <script src="/Admin/js/demo.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

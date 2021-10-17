@@ -1,0 +1,35 @@
+﻿@*@model IEnumerable<ShopApp.Models.Category>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="row">
+    <div class="col-3 category-main-menu">
+        <div class="category-heading">
+            <h3 class="_icon-menu"> BROWSE CATEGORIES</h3>
+        </div>
+        <div class="category-menu-list">
+            <ul>
+                @foreach (var category in Model)
+                {
+                    <li>
+                        <a href="#"> @category.Name<i class="_icon-angle-right"></i></a>
+                        <div class="category-menu-dropdown">
+                            @foreach (var parent in category.Children)
+                            {
+                                <div class="category-parts">
+                                    <a ><h4 class="categories-subtitle"> @parent.Name</h4></a>
+                                    <ul>
+                                        @foreach (var child in parent.Children)
+                                        {
+                                            <li><a asp-controller="Products" asp-action="GetProducts" asp-route-categoryId="@child.Id"> @child.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>*@

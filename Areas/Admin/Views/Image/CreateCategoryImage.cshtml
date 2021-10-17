@@ -1,0 +1,35 @@
+﻿@model ShopApp.ViewModels.CreateCategoryImageViewModel
+@{
+    ViewBag.Title = "Admin - Create Category Image";
+}
+
+<div class="row">
+    <div class="col-md-4" id="image_form">
+        <h4 class="image_form_title">Category Image</h4>
+        <hr />
+        <br />
+        <form id="" asp-action="CreateCategoryImage" asp-antiforgery="true" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="gallery"></div>
+                <br />
+                <input type="file" id="gallery-photo-add" asp-for="UploadedImage" class="form-control" hidden />
+                <label for="gallery-photo-add" class="label-input-image btn btn-secondary btn-sm">Select images</label>
+                <button id="reset-button" type="button" class="btn btn-danger btn-sm">Reset images</button>
+                <span asp-validation-for="UploadedImage" class="text-danger"></span>
+                <span id="error-message" class="text-danger"></span>
+            </div>
+            <br />
+            <hr />
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+            <br />
+        </form>
+    </div>
+</div>
+@section scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="/Admin/myscripts/images-preview.js"></script>
+    <script src="/Admin/myscripts/category-image-validation.js"></script>
+}
+

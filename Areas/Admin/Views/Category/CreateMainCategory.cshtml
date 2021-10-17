@@ -1,0 +1,40 @@
+﻿@model ShopApp.Models.Category
+@{
+    ViewBag.Title = "Admin - Create Category";
+}
+
+<div class="row">
+    <div class="col-md-6" id="category_form">
+        <h4 class="category_form_title">Category</h4>
+        <hr />
+        <br />
+        <form asp-action="CreateMainCategory" asp-antiforgery="true">
+            <div class="form-group">
+                <label asp-for="CategoriesTitleId" class="control-label"></label>
+                <a class="link" asp-controller="CategoriesTitle" asp-action="Create">Create a new Categories Title</a>
+                <select id="categories-title" asp-for="CategoriesTitleId" class="form-select" asp-items="ViewBag.CategoriesTitles">
+                    <option selected="selected" disabled="disabled" value="0"> Please choose a Category Title</option>
+                </select>
+                <span asp-validation-for="CategoriesTitleId" class="text-danger"></span>
+                <span id="error-message" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br />
+            <hr />
+            <div class="d-grid gap-2 d-md-block form-group">
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <a class="btn btn-danger" asp-controller="Home" asp-action="Index" role="button">Cancel</a>
+            </div>
+            <br />
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="/Admin/myscripts/category-validation.js"></script>
+}

@@ -1,0 +1,21 @@
+﻿
+div#image_form {
+    margin: 20px auto;
+}
+
+h4.image_form_title {
+    text-align: center;
+    margin-top: 15px;
+}
+
+div.gallery img {
+    max-width: 350px;
+    max-height: 350px;
+}
+div#image_form span {
+    display: block;
+    padding-top: 6px;
+}
+.label-input-image{
+    margin-bottom: 0;
+}

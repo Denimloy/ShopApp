@@ -1,0 +1,12 @@
+[
+  {
+    "outputFileName": "wwwroot/Admin/css/admin-bundle.css",
+    "inputFiles": [
+      "wwwroot/Admin/css/categories-title-form.css",
+      "wwwroot/Admin/css/category-form.css",
+      "wwwroot/Admin/css/category-image-form.css",
+      "wwwroot/Admin/css/delete-category.css",
+      "wwwroot/Admin/css/style.css"
+    ]
+  }
+]

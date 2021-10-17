@@ -1,0 +1,33 @@
+﻿@model ShopApp.Models.CategoriesTitle
+
+@{
+    ViewBag.Title = "Admin - Create Categories Title";
+}
+
+<div class="row">
+    <div class="col-md-6" id="categories_title_form">
+        <h4 class="categories_title_form_title">Categories Title</h4>
+        <hr />
+        <br />
+        <form asp-controller="CategoriesTitle" asp-action="Create" asp-antiforgery="true">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br />
+            <hr />
+            <div class="d-grid gap-2 d-md-block form-group">
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <a class="btn btn-danger" asp-controller="Category" asp-action="CreateMainCategory" role="button">Cancel</a>
+            </div>
+            <br />
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

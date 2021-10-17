@@ -1,0 +1,7 @@
+﻿.delete-category {
+    position: absolute !important;
+    top: 30%;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+}
