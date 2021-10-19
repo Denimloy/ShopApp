@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using ShopApp.ViewModels;
 using ShopApp.Interfaces;
 using ShopApp.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ShopApp.Controllers
 {
@@ -34,6 +37,9 @@ namespace ShopApp.Controllers
                 else
                 {
                     await _users.CreateAsync(new User { Name = model.Name, Email = model.Email.ToLower(), Password = model.Password });
+
+                    await Authenticate(model.Email);
+
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -53,11 +59,29 @@ namespace ShopApp.Controllers
                 bool correctData = await _users.CheckLoginDetailsAsync(model.Email, model.Password);
                 if(correctData)
                 {
+                    await Authenticate(model.Email);
+
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Wrong email or password. Please try again.");
             }
             return View(model);
+        }
+        private async Task Authenticate(string userEmail)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userEmail)
+            };
+
+            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
 
 

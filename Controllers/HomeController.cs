@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ShopApp.Interfaces;
 using ShopApp.Models;
 using System;
@@ -11,15 +12,10 @@ namespace ShopApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICategoryRepository _categories;
-
-        public HomeController(ICategoryRepository categoryRepository)
-        {
-            _categories = categoryRepository;
-        }
+        [Authorize]
         public IActionResult Index()
         {
-            return View();
+            return Content(User.Identity.Name);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
