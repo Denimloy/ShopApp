@@ -1,3 +1,7 @@
+body {
+    font-family: 'Roboto', sans-serif !important;
+}
+
 div#categories_title_form {
     margin: 20px auto;
 }
@@ -63,8 +67,4 @@ div#image_form span {
     left: 50%;
     right: 50%;
     transform: translate(-50%, -50%);
-}
-
-body {
-    font-family: 'Roboto', sans-serif !important;
 }

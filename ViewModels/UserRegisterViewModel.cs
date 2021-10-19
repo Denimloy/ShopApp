@@ -9,19 +9,20 @@ namespace ShopApp.ViewModels
     public class UserRegisterViewModel
     {
         [Display(Name = "Your name")]
-        [Required(ErrorMessage = "Enter your name")]
+        [Required(ErrorMessage = "Enter your name.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Enter your email")]
+        [Required(ErrorMessage = "Enter your email.")]
         [RegularExpression(@"^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,4}$", ErrorMessage = "Enter a valid email address")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Enter your Password")]
+        [Required(ErrorMessage = "Enter your Password.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Type your password again")]
-        [Compare("Password", ErrorMessage = "Passwords must match")]
+        [Display(Name = "Re-enter password")]
+        [Required(ErrorMessage = "Type your password again.")]
+        [Compare("Password", ErrorMessage = "Passwords must match.")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
