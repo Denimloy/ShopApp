@@ -19,7 +19,6 @@ namespace ShopApp.Controllers
         }
         public IActionResult Index()
         {
-            //var categories = await _categories.GetAllCategoriesAsync();
             return View();
         }
 

@@ -9,5 +9,6 @@ namespace ShopApp.Interfaces
     public interface IUserRepository
     {
         Task CreateAsync(User user);
+        Task<bool> CheckAddressForAvailabilityAsync(string email);
     }
 }

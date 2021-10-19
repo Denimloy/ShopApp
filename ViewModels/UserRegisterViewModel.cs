@@ -17,6 +17,7 @@ namespace ShopApp.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Enter your Password.")]
+        [MinLength(6, ErrorMessage = "Passwords must be at least 6 characters.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

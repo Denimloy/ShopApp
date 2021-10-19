@@ -1,0 +1,10 @@
+div.registration-form {
+    margin: 0 auto;
+}
+div.registration-form a{
+    margin-left: 5px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif !important;
+}

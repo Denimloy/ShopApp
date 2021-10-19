@@ -34,6 +34,7 @@ namespace ShopApp
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<ICategoriesTitleRepository, CategoriesTitleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ImageService>();
 
             services.AddDistributedMemoryCache();

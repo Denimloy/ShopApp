@@ -8,5 +8,12 @@
       "wwwroot/Admin/css/category-image-form.css",
       "wwwroot/Admin/css/delete-category.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/css/bundle.css",
+    "inputFiles": [
+      "wwwroot/css/registration.css",
+      "wwwroot/css/style.css"
+    ]
   }
 ]
