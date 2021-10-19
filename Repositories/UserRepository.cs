@@ -21,9 +21,9 @@ namespace ShopApp.Repositories
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
         }
-        public async Task<bool> CheckAddressForAvailabilityAsync(string email)
+        public async Task<bool> CheckEmailForAvailabilityAsync(string email)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email.ToLower());
             if(user == null)
             {
                 return false;
@@ -34,5 +34,17 @@ namespace ShopApp.Repositories
             }
         }
 
+        public async Task<bool> CheckLoginDetailsAsync(string email, string password)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email.ToLower() && x.Password == password);
+            if(user != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
