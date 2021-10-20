@@ -5,15 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShopApp.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShopApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            string x = Request.Headers["Referer"].ToString();
 
             return View();
         }

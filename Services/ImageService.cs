@@ -35,8 +35,7 @@ namespace ShopApp.Services
 
         private async Task<string> SaveImageAsync(IFormFile uploadedImage, string directoryName)
         {
-            string fileFormat = "";
-
+            string fileFormat;
             if (uploadedImage.ContentType == "image/jpeg")
             {
                 fileFormat = ".jpg";

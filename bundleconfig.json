@@ -12,7 +12,7 @@
   {
     "outputFileName": "wwwroot/css/bundle.css",
     "inputFiles": [
-      "wwwroot/css/registration.css",
+      "wwwroot/css/login-form.css",
       "wwwroot/css/style.css"
     ]
   }

@@ -1,0 +1,53 @@
+﻿@model ShopApp.ViewModels.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign-In</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/adminlte.min.css">
+    <link rel="stylesheet" href="/css/bundle.min.css">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Sign-In</h3>
+            </div>
+            <form class="form-horizontal" asp-action="Login" asp-antiforgery="true">
+                <div class="card-body login-error validation text-danger" asp-validation-summary="ModelOnly"></div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="Your email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Password</label>
+                        <input asp-for="Password" class="form-control" placeholder="Your password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <input type="submit" class="btn btn-info" value="Sign-In" />
+                    <a class="btn btn-danger float-right" asp-controller="Home" asp-action="Index" role="button">Cancel</a>
+                </div>
+                <div class="card-footer">
+                    <p>Create your account? <a asp-action="Registration" class="text-center">Sign-Up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+</body>
+</html>
