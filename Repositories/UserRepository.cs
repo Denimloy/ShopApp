@@ -46,5 +46,10 @@ namespace ShopApp.Repositories
                 return false;
             }
         }
+
+        public async Task<User> GetUserAsync(string email)
+        {
+            return await _db.Users.AsNoTracking().Include(x => x.Role).FirstOrDefaultAsync(x => x.Email == email.ToLower());
+        }
     }
 }

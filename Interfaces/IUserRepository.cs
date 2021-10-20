@@ -11,5 +11,6 @@ namespace ShopApp.Interfaces
         Task CreateAsync(User user);
         Task<bool> CheckEmailForAvailabilityAsync(string email);
         Task<bool> CheckLoginDetailsAsync(string email, string password);
+        Task<User> GetUserAsync(string email);
     }
 }

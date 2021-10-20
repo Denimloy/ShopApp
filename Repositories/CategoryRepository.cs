@@ -74,7 +74,7 @@ namespace ShopApp.Repositories
                 .FirstOrDefaultAsync(x => x.Id == categoryId);
         }
 
-        private string PrepareCategoryNameForSaving(string categoryName)
+        private static string PrepareCategoryNameForSaving(string categoryName)
         {
             //Create an array of strings by spaces and remove extra spaces
             string[] stringArray = categoryName.ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

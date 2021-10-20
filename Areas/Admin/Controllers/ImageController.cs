@@ -7,10 +7,12 @@ using ShopApp.Interfaces;
 using ShopApp.Models;
 using Microsoft.AspNetCore.Http;
 using ShopApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShopApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ImageController : Controller
     {
         private readonly IImageRepository _images;
@@ -55,7 +57,7 @@ namespace ShopApp.Areas.Admin.Controllers
             {
                 await _images.EditCategoryImageAsync(model.UploadedImage, categoryId);
                 HttpContext.Session.Remove("categoryId");
-                return RedirectToAction("EditCategory", "Category", new { categoryId = categoryId });
+                return RedirectToAction("EditCategory", "Category", new { categoryId });
             }
 
             ViewBag.CategoryId = categoryId;

@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShopApp.Models;
 using ShopApp.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShopApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoriesTitleController : Controller
     {
         private readonly ICategoriesTitleRepository _categoriesTitles;
