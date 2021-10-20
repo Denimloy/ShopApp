@@ -23,7 +23,7 @@ namespace ShopApp.Repositories
         }
         public async Task<bool> CheckEmailForAvailabilityAsync(string email)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email.ToLower());
+            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email.ToLower());
             if(user == null)
             {
                 return false;
@@ -36,7 +36,7 @@ namespace ShopApp.Repositories
 
         public async Task<bool> CheckLoginDetailsAsync(string email, string password)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email.ToLower() && x.Password == password);
+            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email.ToLower() && x.Password == password);
             if(user != null)
             {
                 return true;
