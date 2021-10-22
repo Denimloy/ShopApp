@@ -9,14 +9,17 @@ using ShopApp.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 
 namespace ShopApp.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IUserRepository _users;
-        public AccountController(IUserRepository userRepository)
+        private readonly ILogger _logger;
+        public AccountController(IUserRepository userRepository,ILogger<AccountController> logger)
         {
+            this._logger = logger;
             this._users = userRepository;
         }
         public IActionResult Registration()
