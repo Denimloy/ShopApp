@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShopApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Serilog;
 
 namespace ShopApp
 {
@@ -60,6 +61,8 @@ namespace ShopApp
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+
+            app.UseSerilogRequestLogging();
 
             app.UseSession();
 
