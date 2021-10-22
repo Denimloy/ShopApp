@@ -16,10 +16,8 @@ namespace ShopApp.Controllers
     public class AccountController : Controller
     {
         private readonly IUserRepository _users;
-        private readonly ILogger _logger;
         public AccountController(IUserRepository userRepository,ILogger<AccountController> logger)
         {
-            this._logger = logger;
             this._users = userRepository;
         }
         public IActionResult Registration()

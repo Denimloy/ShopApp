@@ -1,4 +1,27 @@
-﻿<header>
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <header>
+        <nav class="navbar navbar-light bg-dark">
+            <div class="container-fluid">
+                <a href="/" class="logo d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">Appshop</a>
+
+                <ul class="nav justify-content-center">
+                    <li><a href="#" class="nav-link px-2 text-white">Categories</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+
+                <div class="d-flex">
+                    <a class="btn btn-warning" role="button" asp-action="Logout" asp-controller="Account">Sign-out</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+}
+else
+{
+<header>
     <nav class="navbar navbar-light bg-dark">
         <div class="container-fluid">
             <a href="/" class="logo d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">Appshop</a>
@@ -16,3 +39,5 @@
         </div>
     </nav>
 </header>
+}
+
