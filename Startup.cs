@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ShopApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
 
@@ -44,7 +43,7 @@ namespace ShopApp
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<ICategoriesTitleRepository, CategoriesTitleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ImageService>();
+            services.AddScoped<FileSystemRepository>();
 
             services.AddDistributedMemoryCache();
             services.AddSession();

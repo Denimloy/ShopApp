@@ -8,15 +8,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ShopApp.Interfaces;
 using ShopApp.Models;
-using ShopApp.Services;
 
 namespace ShopApp.Repositories
 {
     public class ImageRepository : IImageRepository
     {
         private readonly AppDbContext _db;
-        private readonly ImageService _imageService;
-        public ImageRepository(AppDbContext appDbContext, ImageService imageService)
+        private readonly FileSystemRepository _imageService;
+        public ImageRepository(AppDbContext appDbContext, FileSystemRepository imageService)
         {
             this._imageService = imageService;
             this._db = appDbContext;

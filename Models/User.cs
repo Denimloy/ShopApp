@@ -15,7 +15,7 @@ namespace ShopApp.Models
         public Role Role { get; set; }
         public User()
         {
-            this.RoleId = 2; // Default Role - User
+            this.RoleId = 1; // Default Role - User
         }
     }
 }

@@ -151,7 +151,7 @@ namespace ShopApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await _images.DeleteCategoryImageAsync(id);
+
             await _categories.DeleteAsync(id);
 
             return RedirectToAction("GetAllCategories");
