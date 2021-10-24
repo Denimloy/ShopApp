@@ -5,15 +5,18 @@ using System.Threading.Tasks;
 using ShopApp.Interfaces;
 using ShopApp.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace ShopApp.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
         private readonly AppDbContext _db;
-        public CategoryRepository(AppDbContext appDbContext)
+        private readonly FileSystemRepository _fileSystem;
+        public CategoryRepository(AppDbContext appDbContext, FileSystemRepository fileSystem)
         {
-            _db = appDbContext;
+            this._fileSystem = fileSystem;
+            this._db = appDbContext;
         }
 
         public async Task CreateAsync(Category category)
@@ -26,21 +29,22 @@ namespace ShopApp.Repositories
 
         public async Task DeleteAsync(int categoryId)
         {
-            var category = await _db.Categories.FirstOrDefaultAsync(x => x.Id == categoryId);
-                
-
-            if(category.ParentId == null)
+            SqlParameter paramCategoryId = new SqlParameter
             {
-                List<Category> categories = await _db.Categories.Where(x => x.ParentId == categoryId).ToListAsync();
-                categories.Add(category);
+                ParameterName = "@categoryId",
+                Value = categoryId
+            };
 
-                _db.Categories.RemoveRange(categories);
-            }
-            else
+            var paramImagePath = new SqlParameter
             {
-                _db.Categories.Remove(category);
-            }
-            await _db.SaveChangesAsync();
+                ParameterName = "@imagePath",
+                SqlDbType = System.Data.SqlDbType.NVarChar,
+                Direction = System.Data.ParameterDirection.Output,
+                Size = -1
+            };
+            await _db.Database.ExecuteSqlRawAsync("DeleteCategoryWithImage @categoryId, @imagePath OUT", paramCategoryId, paramImagePath);
+            string imagePath = paramImagePath.Value.ToString();
+            _fileSystem.DeleteImageFromFileSystemAsync(imagePath);
         }
 
         public async Task EditAsync(Category category)

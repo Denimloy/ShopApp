@@ -8,13 +8,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShopApp.Interfaces;
 
-namespace ShopApp.Services
+namespace ShopApp.Repositories
 {
-    public class ImageService
+    public class FileSystemRepository
     {
         private readonly IWebHostEnvironment _appEnvironment;
         
-        public ImageService(IWebHostEnvironment appEnvironment)
+        public FileSystemRepository(IWebHostEnvironment appEnvironment)
         {
             this._appEnvironment = appEnvironment;
         }
@@ -23,6 +23,8 @@ namespace ShopApp.Services
         {
             string directoryName = "products";
 
+            await Task.Run(() => CheckDirectoryExistence(directoryName));
+
             return await SaveImageAsync(uploadedImage, directoryName);
         }
 
@@ -30,7 +32,18 @@ namespace ShopApp.Services
         {
             string directoryName = "categories";
 
+            await Task.Run(() => CheckDirectoryExistence(directoryName));
+
             return await SaveImageAsync(uploadedImage, directoryName);
+        }
+        private void CheckDirectoryExistence(string directoryName)
+        {
+            string directoryPath = _appEnvironment.WebRootPath + $"\\images\\{directoryName}";
+            DirectoryInfo dirInfo = new DirectoryInfo(directoryPath);
+            if (!dirInfo.Exists)
+            {
+                dirInfo.Create();
+            }
         }
 
         private async Task<string> SaveImageAsync(IFormFile uploadedImage, string directoryName)
