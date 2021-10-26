@@ -135,26 +135,6 @@ namespace ShopApp.Repositories
 
 
         }
-
-        public async Task<Category> GetCategoryByIdAsync(int categoryId)
-        {
-            try
-            {
-                return await _db.Categories
-                    .Include(x => x.CategoriesTitle)
-                    .Include(x => x.Image)
-                    .FirstOrDefaultAsync(x => x.Id == categoryId);
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError(ex, "GetCategoryByIdAsync method error");
-
-                Category category = new Category();
-
-                return category;
-            }
-        }
-
         private static string PrepareCategoryNameForSaving(string categoryName)
         {
             //Create an array of strings by spaces and remove extra spaces

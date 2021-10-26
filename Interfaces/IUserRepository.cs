@@ -8,7 +8,7 @@ namespace ShopApp.Interfaces
 {
     public interface IUserRepository
     {
-        Task CreateAsync(User user);
+        Task<bool> CreateAsync(User user);
         Task<bool> CheckEmailForAvailabilityAsync(string email);
         Task<bool> CheckLoginDetailsAsync(string email, string password);
         Task<User> GetUserAsync(string email);

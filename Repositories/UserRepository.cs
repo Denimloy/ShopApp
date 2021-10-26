@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ShopApp.Interfaces;
 using ShopApp.Models;
 using ShopApp.ViewModels;
@@ -12,44 +13,84 @@ namespace ShopApp.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _db;
-        public UserRepository(AppDbContext appDbContext)
+        private readonly ILogger _logger;
+        public UserRepository(AppDbContext appDbContext, ILogger<UserRepository> logger)
         {
+            this._logger = logger;
             this._db = appDbContext;
         }
-        public async Task CreateAsync(User user)
+        public async Task<bool> CreateAsync(User user)
         {
-            _db.Users.Add(user);
-            await _db.SaveChangesAsync();
+            try
+            {
+                _db.Users.Add(user);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "CreateAsync method error");
+
+                return false;
+            }
         }
         public async Task<bool> CheckEmailForAvailabilityAsync(string email)
         {
-            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email.ToLower());
-            if(user == null)
+            try
             {
-                return false;
+                var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email.ToLower());
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return true;
+                _logger.LogError(ex, "CheckEmailForAvailabilityAsync method error");
+
+                return false;
             }
         }
 
         public async Task<bool> CheckLoginDetailsAsync(string email, string password)
         {
-            var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email.ToLower() && x.Password == password);
-            if(user != null)
+            try
             {
-                return true;
+                var user = await _db.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email.ToLower() && x.Password == password);
+                if (user != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch(Exception ex)
             {
+                _logger.LogError(ex, "CheckLoginDetailsAsync method error");
+
                 return false;
             }
         }
 
         public async Task<User> GetUserAsync(string email)
         {
-            return await _db.Users.AsNoTracking().Include(x => x.Role).FirstOrDefaultAsync(x => x.Email == email.ToLower());
+            try
+            {
+                return await _db.Users.AsNoTracking().Include(x => x.Role).FirstOrDefaultAsync(x => x.Email == email.ToLower());
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetUserAsync method error");
+
+                return null;
+            }
         }
     }
 }

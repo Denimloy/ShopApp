@@ -10,7 +10,6 @@ namespace ShopApp.Interfaces
     {
         Task<List<Category>> GetAllMainCategoriesAsync();
         Task<List<Category>> GetAllCategoriesAsync();
-        Task<Category> GetCategoryByIdAsync(int categoryId);
         Task<bool> CreateAsync(Category category);
         Task<bool> EditAsync(Category category);
         Task<bool> DeleteAsync(int categoryId);
