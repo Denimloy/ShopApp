@@ -28,8 +28,15 @@ namespace ShopApp.Areas.Admin.Controllers
         {
             if(ModelState.IsValid)
             {
-                await _categoriesTitles.CreateAsync(categoriesTitle);
-                return RedirectToAction("CreateMainCategory", "Category");
+                bool result = await _categoriesTitles.CreateAsync(categoriesTitle);
+                if(result)
+                {
+                    return RedirectToAction("CreateMainCategory", "Category");
+                }
+                else
+                {
+                    return StatusCode(500);
+                }
             }
             return View(categoriesTitle);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ShopApp.Interfaces;
 using ShopApp.Models;
 
@@ -11,22 +12,46 @@ namespace ShopApp.Repositories
     public class CategoriesTitleRepository : ICategoriesTitleRepository
     {
         private readonly AppDbContext _db;
+        private readonly ILogger _logger;
 
-        public CategoriesTitleRepository(AppDbContext appDbContext)
+        public CategoriesTitleRepository(AppDbContext appDbContext, ILogger<CategoriesTitleRepository> logger)
         {
-            _db = appDbContext;
+            this._logger = logger;
+            this._db = appDbContext;
         }
-        public async Task CreateAsync(CategoriesTitle categoriesTitle)
+        public async Task<bool> CreateAsync(CategoriesTitle categoriesTitle)
         {
-            categoriesTitle.Name = await Task.Run(() => PrepareTitleNameForSaving(categoriesTitle.Name));
+            try
+            {
+                categoriesTitle.Name = await Task.Run(() => PrepareTitleNameForSaving(categoriesTitle.Name));
 
-            _db.CategoriesTitles.Add(categoriesTitle);
-            await _db.SaveChangesAsync();
+                _db.CategoriesTitles.Add(categoriesTitle);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "CreateAsync method error");
+
+                return false;
+            }
         }
 
         public async Task<List<CategoriesTitle>> GetAllCategoriesTitlesAsync()
         {
-            return await _db.CategoriesTitles.AsNoTracking().ToListAsync();
+            try
+            {
+                return await _db.CategoriesTitles.AsNoTracking().ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAllCategoriesTitlesAsync method error");
+
+                List<CategoriesTitle> categoriesTitles = new List<CategoriesTitle>();
+
+                return categoriesTitles;
+            }
         }
         private static string PrepareTitleNameForSaving(string titleName)
         {
