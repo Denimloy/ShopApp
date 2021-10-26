@@ -9,9 +9,8 @@ namespace ShopApp.Interfaces
 {
     public interface IImageRepository
     {
-        Task CreateProductImageCollectionAsync(IFormFileCollection uploadedImages, int productId);
-        Task CreateCategoryImageAsync(IFormFile uploadedImage, int categoryId);
-        Task EditCategoryImageAsync(IFormFile uploadedImage, int categoryId);
-        Task DeleteCategoryImageAsync(int categoryId);
+        Task<bool> CreateCategoryImageAsync(IFormFile uploadedImage, int categoryId);
+        Task<bool> EditCategoryImageAsync(IFormFile uploadedImage, int categoryId);
+        Task<bool> DeleteCategoryImageAsync(int categoryId);
     }
 }

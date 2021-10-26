@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ShopApp.Interfaces;
 using ShopApp.Models;
 
@@ -15,63 +16,107 @@ namespace ShopApp.Repositories
     {
         private readonly AppDbContext _db;
         private readonly FileSystemRepository _imageService;
-        public ImageRepository(AppDbContext appDbContext, FileSystemRepository imageService)
+        private readonly ILogger _logger;
+        public ImageRepository(AppDbContext appDbContext, FileSystemRepository imageService, ILogger<ImageRepository> logger)
         {
+            this._logger = logger;
             this._imageService = imageService;
             this._db = appDbContext;
         }
 
-        public async Task CreateProductImageCollectionAsync(IFormFileCollection uploadedImages, int productId)
+        public async Task<bool> CreateCategoryImageAsync(IFormFile uploadedImage, int categoryId)
         {
-            foreach (var image in uploadedImages)
+            try
             {
-                await CreateProductImageAsync(image, productId);
+                string path = await _imageService.SaveCategoryImageInFileSystemAsync(uploadedImage);
+
+                Image image = new() { CategoryId = categoryId, Path = path };
+                _db.Images.Add(image);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "CreateCategoryImageAsync method error");
+
+                return false;
+            }
+
+        }
+
+        public async Task<bool> EditCategoryImageAsync(IFormFile uploadedImage, int categoryId)
+        {
+            try
+            {
+                Image image = await _db.Images.FirstOrDefaultAsync(x => x.CategoryId == categoryId);
+                if(image == null)
+                {
+                    _logger.LogInformation("EditCategoryImageAsync method value: {categoryId}", categoryId);
+
+                    return false;
+                }
+
+                _imageService.DeleteImageFromFileSystemAsync(image.Path);
+
+                string path = await _imageService.SaveCategoryImageInFileSystemAsync(uploadedImage);
+                image.Path = path;
+
+                bool result = await EditAsync(image);
+                if(!result)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "EditCategoryImageAsync method error");
+
+                return false;
             }
         }
-        
-        public async Task CreateProductImageAsync(IFormFile uploadedImage, int productId)
+        private async Task<bool> EditAsync(Image image)
         {
-            string path = await _imageService.SaveProductImageInFileSystemAsync(uploadedImage);
-
-            Image image = new() { ProductId = productId, Path = path };
-            _db.Images.Add(image);
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task CreateCategoryImageAsync(IFormFile uploadedImage, int categoryId)
-        {
-
-            string path = await _imageService.SaveCategoryImageInFileSystemAsync(uploadedImage);
-
-            Image image = new() { CategoryId = categoryId, Path = path };
-            _db.Images.Add(image);
-            await _db.SaveChangesAsync();
-
-        }
-
-        public async Task EditCategoryImageAsync(IFormFile uploadedImage, int categoryId)
-        {
-            Image image = await _db.Images.FirstOrDefaultAsync(x => x.CategoryId == categoryId);
-            _imageService.DeleteImageFromFileSystemAsync(image.Path);
-
-            string path = await _imageService.SaveCategoryImageInFileSystemAsync(uploadedImage);
-            image.Path = path;
-            await EditAsync(image);
-        }
-        private async Task EditAsync(Image image)
-        {
-            _db.Images.Update(image);
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task DeleteCategoryImageAsync(int categoryId)
-        {
-            Image image = await _db.Images.FirstOrDefaultAsync(x => x.CategoryId == categoryId);
-            if(image != null)
+            try
             {
+                _db.Images.Update(image);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "EditAsync method error");
+
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteCategoryImageAsync(int categoryId)
+        {
+            try
+            {
+                Image image = await _db.Images.FirstOrDefaultAsync(x => x.CategoryId == categoryId);
+                if (image == null)
+                {
+                    _logger.LogInformation("DeleteCategoryImageAsync method value: {categoryId}", categoryId);
+
+                    return false;
+                }
+
                 _imageService.DeleteImageFromFileSystemAsync(image.Path);
                 _db.Images.Remove(image);
                 await _db.SaveChangesAsync();
+                
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "DeleteCategoryImageAsync method error");
+
+                return false;
             }
         }
     }
