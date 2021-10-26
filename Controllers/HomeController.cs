@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using ShopApp.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShopApp.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using ShopApp.ViewModels;
+using System;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace ShopApp.Controllers
 {
@@ -18,11 +16,21 @@ namespace ShopApp.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [Route("/Error")]
+        public IActionResult Error(int code)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            ErrorViewModel model = new ErrorViewModel { StatusCode = code, ErrorMessage = "Something went wrong." };
+            if (code >= 500)
+            {
+                return View("ServerError", model);
+            }
+            if (code == 404)
+            {
+                model.ErrorMessage = "Page not found.";
+            }
 
+            return View("ClientError", model);
+        }
     }
 }
 

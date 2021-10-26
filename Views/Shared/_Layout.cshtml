@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet">
+    @{await Html.RenderPartialAsync("_StylesPartial");}
     <title>@ViewData["Title"] - ShopApp</title>
 </head>
 <body>

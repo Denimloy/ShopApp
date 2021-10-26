@@ -87,13 +87,12 @@ namespace ShopApp.Repositories
 
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "EditAsync method error");
 
                 return false;
             }
-
         }
 
         public async Task<List<Category>> GetAllCategoriesAsync()
@@ -120,8 +119,6 @@ namespace ShopApp.Repositories
                 return await _db.Categories
                     .Where(x => x.Parent == null)
                     .Include(x => x.Children)
-                    .ThenInclude(x => x.Children)
-                    .AsSplitQuery()
                     .AsNoTracking()
                     .ToListAsync();
             }

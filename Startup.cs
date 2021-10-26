@@ -49,16 +49,11 @@ namespace ShopApp
             services.AddSession();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+
+            app.UseStatusCodePagesWithReExecute("/Error", "?code={0}");
+
             app.UseStaticFiles();
 
             app.UseSerilogRequestLogging();

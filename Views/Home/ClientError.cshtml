@@ -1,0 +1,64 @@
+﻿@model ShopApp.ViewModels.ErrorViewModel
+@{
+    Layout = null;
+    ViewBag.Title = Model.StatusCode;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+
+    @{await Html.RenderPartialAsync("_StylesPartial");}
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        <div class="container-fluid">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>@Model.StatusCode Error Page</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="error-page">
+                    <h2 class="headline text-warning"> @Model.StatusCode</h2>
+                    <div class="error-content">
+                        <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! @Model.ErrorMessage</h3>
+                        <p>
+                            An error occurred while processing your request. Meanwhile, you may
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Index" asp-controller="Home" asp-route-area="Admin">return to home page</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Index" asp-controller="Home">return to home page</a>
+                            }
+                            or try using the search form.
+                        </p>
+                        <form class="search-form">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" placeholder="Search">
+                                <div class="input-group-append">
+                                    <button type="submit" name="submit" class="btn btn-warning">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

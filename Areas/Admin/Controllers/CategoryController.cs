@@ -47,7 +47,6 @@ namespace ShopApp.Areas.Admin.Controllers
                 {
                     HttpContext.Session.SetInt32("newCategoryId", category.Id);
                     return RedirectToAction("CreateCategoryImage", "Image");
-
                 }
                 else
                 {
