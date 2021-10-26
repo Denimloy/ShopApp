@@ -28,7 +28,7 @@ namespace ShopApp.Repositories
         {
             return await _db.CategoriesTitles.AsNoTracking().ToListAsync();
         }
-        private string PrepareTitleNameForSaving(string titleName)
+        private static string PrepareTitleNameForSaving(string titleName)
         {
             //Create an array of strings by spaces and remove extra spaces
             string[] stringArray = titleName.ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

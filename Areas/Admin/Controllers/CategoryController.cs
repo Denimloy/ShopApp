@@ -42,10 +42,17 @@ namespace ShopApp.Areas.Admin.Controllers
             }
             if(ModelState.IsValid)
             {
-                await _categories.CreateAsync(category);
-                HttpContext.Session.SetInt32("newCategoryId", category.Id);
+                bool result = await _categories.CreateAsync(category);
+                if(result)
+                {
+                    HttpContext.Session.SetInt32("newCategoryId", category.Id);
+                    return RedirectToAction("CreateCategoryImage", "Image");
 
-                return RedirectToAction("CreateCategoryImage", "Image");
+                }
+                else
+                {
+                    return StatusCode(500);
+                }
             }
 
             var categoriesTitles = await _categoriesTitles.GetAllCategoriesTitlesAsync();
@@ -73,8 +80,15 @@ namespace ShopApp.Areas.Admin.Controllers
             }
             if(ModelState.IsValid)
             {
-                await _categories.CreateAsync(category);
-                return RedirectToAction("Index", "Home");
+                bool result = await _categories.CreateAsync(category);
+                if(result)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return StatusCode(500);
+                }
             }
 
             var categories = await _categories.GetAllMainCategoriesAsync();
@@ -104,8 +118,15 @@ namespace ShopApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categories.EditAsync(category);
-                return RedirectToAction("GetAllCategories");
+                bool result = await _categories.EditAsync(category);
+                if(result)
+                {
+                    return RedirectToAction("GetAllCategories");
+                }
+                else
+                {
+                    return StatusCode(500);
+                }
             }
 
             var categoriesTitles = await _categoriesTitles.GetAllCategoriesTitlesAsync();
@@ -131,8 +152,15 @@ namespace ShopApp.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categories.EditAsync(subcategory);
-                return RedirectToAction("GetAllCategories");
+                bool result = await _categories.EditAsync(subcategory);
+                if(result)
+                {
+                    return RedirectToAction("GetAllCategories");
+                }
+                else
+                {
+                    return StatusCode(500);
+                }
             }
 
             var mainCategories = await _categories.GetAllMainCategoriesAsync();
@@ -149,12 +177,20 @@ namespace ShopApp.Areas.Admin.Controllers
             return View(category);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
 
-            await _categories.DeleteAsync(id);
+            bool result = await _categories.DeleteAsync(id);
+            if(result)
+            {
+                return RedirectToAction("GetAllCategories");
+            }
+            else
+            {
+                return StatusCode(500);
+            }
 
-            return RedirectToAction("GetAllCategories");
         }
 
 

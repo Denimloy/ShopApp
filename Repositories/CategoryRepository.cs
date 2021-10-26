@@ -6,6 +6,7 @@ using ShopApp.Interfaces;
 using ShopApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 
 namespace ShopApp.Repositories
 {
@@ -13,69 +14,145 @@ namespace ShopApp.Repositories
     {
         private readonly AppDbContext _db;
         private readonly FileSystemRepository _fileSystem;
-        public CategoryRepository(AppDbContext appDbContext, FileSystemRepository fileSystem)
+        private readonly ILogger _logger;
+        public CategoryRepository(AppDbContext appDbContext, FileSystemRepository fileSystem, ILogger<CategoryRepository> logger)
         {
+            this._logger = logger;
             this._fileSystem = fileSystem;
             this._db = appDbContext;
         }
 
-        public async Task CreateAsync(Category category)
+        public async Task<bool> CreateAsync(Category category)
         {
-            category.Name = await Task.Run(() => PrepareCategoryNameForSaving(category.Name));
+            try
+            {
+                category.Name = await Task.Run(() => PrepareCategoryNameForSaving(category.Name));
 
-            _db.Categories.Add(category);
-            await _db.SaveChangesAsync();
+                _db.Categories.Add(category);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+
+                _logger.LogError(ex, "CreateAsync method error");
+
+                return false;
+
+            }
+
         }
 
-        public async Task DeleteAsync(int categoryId)
+        public async Task<bool> DeleteAsync(int categoryId)
         {
-            SqlParameter paramCategoryId = new SqlParameter
+            try
             {
-                ParameterName = "@categoryId",
-                Value = categoryId
-            };
+                SqlParameter paramCategoryId = new()
+                {
+                    ParameterName = "@categoryId",
+                    Value = categoryId
+                };
 
-            var paramImagePath = new SqlParameter
+                SqlParameter paramImagePath = new()
+                {
+                    ParameterName = "@imagePath",
+                    SqlDbType = System.Data.SqlDbType.NVarChar,
+                    Direction = System.Data.ParameterDirection.Output,
+                    Size = -1
+                };
+
+                await _db.Database.ExecuteSqlRawAsync("DeleteCategoryWithImage @categoryId, @imagePath OUT", paramCategoryId, paramImagePath);
+                string imagePath = paramImagePath.Value.ToString();
+                _fileSystem.DeleteImageFromFileSystemAsync(imagePath);
+
+                return true;
+
+            }
+            catch(Exception ex)
             {
-                ParameterName = "@imagePath",
-                SqlDbType = System.Data.SqlDbType.NVarChar,
-                Direction = System.Data.ParameterDirection.Output,
-                Size = -1
-            };
-            await _db.Database.ExecuteSqlRawAsync("DeleteCategoryWithImage @categoryId, @imagePath OUT", paramCategoryId, paramImagePath);
-            string imagePath = paramImagePath.Value.ToString();
-            _fileSystem.DeleteImageFromFileSystemAsync(imagePath);
+                _logger.LogError(ex, "DeleteAsync method error");
+
+                return false;
+            }
+
         }
 
-        public async Task EditAsync(Category category)
+        public async Task<bool> EditAsync(Category category)
         {
-            _db.Categories.Update(category);
-            await _db.SaveChangesAsync();
+            try
+            {
+                _db.Categories.Update(category);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "EditAsync method error");
+
+                return false;
+            }
+
         }
 
         public async Task<List<Category>> GetAllCategoriesAsync()
         {
-            return await _db.Categories.AsNoTracking().ToListAsync();
+            try
+            {
+                return await _db.Categories.AsNoTracking().ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAllCategoriesAsync method error");
+
+                List<Category> categories = new List<Category>();
+
+                return categories;
+            }
 ;
         }
 
         public async Task<List<Category>> GetAllMainCategoriesAsync()
         {
-            
-            return await _db.Categories
-                .Where(x => x.Parent == null)
-                .Include(x => x.Children)
-                .ThenInclude(x => x.Children)
-                .AsNoTracking()
-                .ToListAsync();
+            try
+            {
+                return await _db.Categories
+                    .Where(x => x.Parent == null)
+                    .Include(x => x.Children)
+                    .ThenInclude(x => x.Children)
+                    .AsNoTracking()
+                    .ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAllMainCategoriesAsync method error");
+
+                List<Category> categories = new List<Category>();
+
+                return categories;
+            }
+
+
         }
 
         public async Task<Category> GetCategoryByIdAsync(int categoryId)
         {
-            return await _db.Categories
-                .Include(x => x.CategoriesTitle)
-                .Include(x => x.Image)
-                .FirstOrDefaultAsync(x => x.Id == categoryId);
+            try
+            {
+                return await _db.Categories
+                    .Include(x => x.CategoriesTitle)
+                    .Include(x => x.Image)
+                    .FirstOrDefaultAsync(x => x.Id == categoryId);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetCategoryByIdAsync method error");
+
+                Category category = new Category();
+
+                return category;
+            }
         }
 
         private static string PrepareCategoryNameForSaving(string categoryName)
@@ -96,6 +173,7 @@ namespace ShopApp.Repositories
                     correctedCategoryName += item.ToUpper() + " ";
                 }
             }
+
             return correctedCategoryName.TrimEnd(space);
         }
 

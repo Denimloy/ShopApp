@@ -3,7 +3,7 @@
 <div class="delete-category card" style="width: 18rem;">
     <div class="card-body">
         <p class="card-text">Do you want to delete the category?</p>
-        <form asp-action="Delete" asp-controller="Category" method="post">
+        <form asp-action="Delete" asp-controller="Category" asp-antiforgery="true">
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Confirm" />
                 <a class="btn btn-danger" role="button" asp-action="GetAllCategories" asp-controller="Category">Cancel</a>
