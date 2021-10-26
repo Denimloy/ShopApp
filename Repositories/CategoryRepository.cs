@@ -121,6 +121,7 @@ namespace ShopApp.Repositories
                     .Where(x => x.Parent == null)
                     .Include(x => x.Children)
                     .ThenInclude(x => x.Children)
+                    .AsSplitQuery()
                     .AsNoTracking()
                     .ToListAsync();
             }
@@ -157,5 +158,21 @@ namespace ShopApp.Repositories
             return correctedCategoryName.TrimEnd(space);
         }
 
+        public async Task<Category> GetCategoryByIdAsync(int categoryId)
+        {
+            try
+            {
+                return await _db.Categories
+                    .Include(x => x.Image)
+                    .FirstOrDefaultAsync(x => x.Id == categoryId);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAllMainCategoriesAsync method error");
+
+                return null;
+            }
+
+        }
     }
 }
