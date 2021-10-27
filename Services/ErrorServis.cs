@@ -46,7 +46,7 @@ namespace ShopApp.Services
                 return enumValue.GetType()
                            .GetMember(enumValue.ToString())
                            .First()
-                           .GetCustomAttribute<DescriptionAttribute>()?
+                           .GetCustomAttribute<DescriptionAttribute>()
                            .Description;
             }
     }
