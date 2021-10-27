@@ -6,7 +6,8 @@
       "wwwroot/Admin/css/categories-title-form.css",
       "wwwroot/Admin/css/category-form.css",
       "wwwroot/Admin/css/category-image-form.css",
-      "wwwroot/Admin/css/delete-category.css"
+      "wwwroot/Admin/css/delete-category.css",
+      "wwwroot/Admin/css/attributes-template-form.css"
     ]
   },
   {

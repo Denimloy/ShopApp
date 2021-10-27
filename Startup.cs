@@ -46,6 +46,7 @@ namespace ShopApp
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<FileSystemRepository>();
             services.AddTransient<ErrorServis>();
+            services.AddScoped<IAttributesTemplateRepository, AttributesTemplateRepository>();
 
             services.AddDistributedMemoryCache();
             services.AddSession();

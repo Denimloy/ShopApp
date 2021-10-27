@@ -64,3 +64,12 @@ div#image_form span {
     right: 50%;
     transform: translate(-50%, -50%);
 }
+
+div#attributes-template-form {
+    margin: 20px auto;
+    position: relative;
+}
+
+h4.attributes-template-form_title {
+    text-align: center;
+}

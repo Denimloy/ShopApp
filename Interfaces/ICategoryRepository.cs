@@ -14,5 +14,6 @@ namespace ShopApp.Interfaces
         Task<bool> CreateAsync(Category category);
         Task<bool> EditAsync(Category category);
         Task<bool> DeleteAsync(int categoryId);
+        Task<List<Category>> GetAllSubcategoriesAsync();
     }
 }

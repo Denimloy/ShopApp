@@ -169,7 +169,21 @@ namespace ShopApp.Repositories
 
                 return null;
             }
+        }
 
+        public async Task<List<Category>> GetAllSubcategoriesAsync()
+        {
+            try
+            {
+                return await _db.Categories.Where(x => x.ParentId != null).AsNoTracking().ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAllSubcategoriesAsync method error");
+
+                List<Category> categories = new List<Category>();
+                return categories;
+            }
         }
     }
 }

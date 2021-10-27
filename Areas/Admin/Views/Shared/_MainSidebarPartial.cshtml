@@ -32,17 +32,48 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a asp-action="CreateMainCategory" asp-controller="Category" class="nav-link">
-                                <p>Create category</p>
+                                <p>Create Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-action="CreateSubcategory" asp-controller="Category" class="nav-link">
-                                <p>Create subcategory</p>
+                                <p>Create Subcategory</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-action="GetAllCategories" asp-controller="Category" class="nav-link">
-                                <p>All categories</p>
+                                <p>All Categories</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fab fa-adn"></i>
+                        <p>
+                            Product Attributes
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-action="Create" asp-controller="AttributesTemplate" class="nav-link">
+                                <p>Create Attributes Template</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../../index3.html" class="nav-link">
+                                <p>Create Product Attribute</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="GetAllAttributesTemplates" asp-controller="AttributesTemplate" class="nav-link">
+                                <p>All Attributes Templates</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../../index3.html" class="nav-link">
+                                <p>All Product Attributes</p>
                             </a>
                         </li>
                     </ul>
