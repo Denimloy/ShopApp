@@ -5,11 +5,18 @@ using ShopApp.ViewModels;
 using System;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
+using ShopApp.Services;
+using System.Threading.Tasks;
 
 namespace ShopApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ErrorServis _error; 
+        public HomeController(ErrorServis errorServis)
+        {
+            this._error = errorServis;
+        }
         public IActionResult Index()
         {
             return View();
@@ -17,16 +24,14 @@ namespace ShopApp.Controllers
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         [Route("/Error")]
-        public IActionResult Error(int code)
+        public async Task<IActionResult> Error(int code)
         {
-            ErrorViewModel model = new ErrorViewModel { StatusCode = code, ErrorMessage = "Something went wrong." };
-            if (code >= 500)
+
+            ErrorViewModel model = await _error.HandleErrorAsync(code);
+
+            if (model.StatusCode >= 500)
             {
                 return View("ServerError", model);
-            }
-            if (code == 404)
-            {
-                model.ErrorMessage = "Page not found.";
             }
 
             return View("ClientError", model);
