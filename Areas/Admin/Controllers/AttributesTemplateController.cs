@@ -7,6 +7,7 @@ using ShopApp.Models;
 using ShopApp.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using ShopApp.ViewModels;
 
 namespace ShopApp.Areas.Admin.Controllers
 {
@@ -35,8 +36,8 @@ namespace ShopApp.Areas.Admin.Controllers
         {
             if(ModelState.IsValid)
             {
-                AttributesTemplate template = new AttributesTemplate { Name = attributesTemplate.Name, CategoryId = attributesTemplate.CategoryId };
-                bool result = await _attributesTemplates.CreateAsync(template);
+                bool result = await _attributesTemplates.CreateAsync(attributesTemplate);
+
                 if(result)
                 {
                     return RedirectToAction("Index", "Home");
@@ -50,8 +51,39 @@ namespace ShopApp.Areas.Admin.Controllers
         public async Task<IActionResult> GetAllAttributesTemplates()
         {
             var attributesTemplates = await _attributesTemplates.GetAllAttributesTemplatesAsync();
+
             return View(attributesTemplates);
+
         }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var attributesTemplate = await _attributesTemplates.GetAttributesTemplateByIdAsync(id);
+
+            var categories = await _categories.GetAllSubcategoriesAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+
+            return View(attributesTemplate);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(AttributesTemplate attributesTemplate)
+        {
+            if(ModelState.IsValid)
+            {
+                bool result = await _attributesTemplates.EditAsync(attributesTemplate);
+
+                if(result)
+                {
+                    return RedirectToAction("GetAllAttributesTemplates");
+                }
+
+                return StatusCode(500);
+            }
+
+            return View(attributesTemplate);
+        }
+
 
     }
 }

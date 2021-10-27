@@ -52,6 +52,39 @@ namespace ShopApp.Repositories
                 return attributesTemplates;
             }
         }
+        public async Task<AttributesTemplate> GetAttributesTemplateByIdAsync(int id)
+        {
+            try
+            {
+                return await _db.AttributesTemplates.FirstOrDefaultAsync(x => x.Id == id);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAttributesTemplateByIdAsync method error");
+
+                return null;
+            }
+        }
+        public async Task<bool> EditAsync(AttributesTemplate attributesTemplate)
+        {
+            try
+            {
+                attributesTemplate.Name = await Task.Run(() => PrepareAttributesTemplateForSaving(attributesTemplate.Name));
+
+                _db.AttributesTemplates.Update(attributesTemplate);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "EditAsync method error");
+
+                return false;
+            }
+
+        }
+
 
         private static string PrepareAttributesTemplateForSaving(string templateName)
         {
