@@ -1,8 +1,8 @@
 ﻿@model  ShopApp.Models.Category
 
-<div class="delete-category card" style="width: 18rem;">
+<div class="delete card" style="width: 18rem;">
     <div class="card-body">
-        <p class="card-text">Do you want to delete the category?</p>
+        <p class="card-text">Do you want to delete the Category: <strong>@Model.Name</strong>?</p>
         <form asp-action="Delete" asp-controller="Category" asp-antiforgery="true">
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Confirm" />

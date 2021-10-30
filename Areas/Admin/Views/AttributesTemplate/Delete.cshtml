@@ -1,0 +1,14 @@
+﻿@model ShopApp.Models.AttributesTemplate
+
+<div class="delete card" style="width: 18rem;">
+    <div class="card-body">
+        <p class="card-text">Do you want to delete the Attributes Template: <strong>@Model.Name</strong>?</p>
+        <form asp-action="Delete" asp-controller="AttributesTemplate" asp-antiforgery="true">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Confirm" />
+                <a class="btn btn-danger" role="button" asp-action="GetAllAttributesTemplates" asp-controller="AttributesTemplate" >Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -10,11 +10,12 @@ namespace ShopApp.Models
     {
         public int Id { get; set; }
         [Required]
+        [RegularExpression(@"^[A-Za-z &]+$", ErrorMessage = "Only non-numeric characters.")]
         public string Name { get; set; }
 
         [Required]
         [Display(Name = "Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
         public ICollection<ProductAttribute> ProductAttributes { get; set; }
         public AttributesTemplate()

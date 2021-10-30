@@ -57,7 +57,7 @@ div#image_form span {
     margin-bottom: 0;
 }
 
-.delete-category {
+.delete {
     position: absolute !important;
     top: 30%;
     left: 50%;

@@ -12,5 +12,6 @@ namespace ShopApp.Interfaces
         Task<List<AttributesTemplate>> GetAllAttributesTemplatesAsync();
         Task<AttributesTemplate> GetAttributesTemplateByIdAsync(int id);
         Task<bool> EditAsync(AttributesTemplate attributesTemplate);
+        Task<bool> DeleteAsync(int Id);
     }
 }

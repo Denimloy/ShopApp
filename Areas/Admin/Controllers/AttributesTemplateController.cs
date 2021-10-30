@@ -83,6 +83,31 @@ namespace ShopApp.Areas.Admin.Controllers
 
             return View(attributesTemplate);
         }
+        [HttpGet]
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(int id)
+        {
+            var attributesTemplate = await _attributesTemplates.GetAttributesTemplateByIdAsync(id);
+
+            return View(attributesTemplate);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            bool result = await _attributesTemplates.DeleteAsync(id);
+            if (result)
+            {
+                return RedirectToAction("GetAllAttributesTemplates");
+            }
+            else
+            {
+                return StatusCode(500);
+            }
+
+        }
 
 
     }

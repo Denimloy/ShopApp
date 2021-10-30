@@ -85,6 +85,21 @@ namespace ShopApp.Repositories
 
         }
 
+        public async Task<bool> DeleteAsync(int Id)
+        {
+            try
+            {
+                var attributesTemplate = await _db.AttributesTemplates.FirstOrDefaultAsync(x => x.Id == Id);
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "DeleteAsync method error");
+
+                return false;
+            }
+        }
 
         private static string PrepareAttributesTemplateForSaving(string templateName)
         {
