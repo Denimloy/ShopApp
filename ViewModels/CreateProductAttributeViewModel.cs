@@ -12,7 +12,6 @@ namespace ShopApp.ViewModels
         [Required]
         [Display( Name = "Category")]
         public int? CategoryId { get; set; }
-        public List<AttributesTemplate> AttributesTemplates { get; set; }
         public ProductAttribute ProductAttribute { get; set; }
     }
 }

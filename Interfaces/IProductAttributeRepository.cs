@@ -10,5 +10,9 @@ namespace ShopApp.Interfaces
     {
         Task<bool> CreateAsync(ProductAttribute productAttribute);
         Task<List<ProductAttribute>> GetAllProductAttributesAsync();
+
+        Task<ProductAttribute> GetProductAttributeByIdAsync(int id);
+
+        Task<bool> EditAsync(ProductAttribute productAttribute);
     }
 }

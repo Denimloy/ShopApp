@@ -36,6 +36,23 @@ namespace ShopApp.Repositories
             }
         }
 
+        public async Task<bool> EditAsync(ProductAttribute productAttribute)
+        {
+            try
+            {
+                _db.ProductAttributes.Update(productAttribute);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAllProductAttributesAsync method error");
+
+                return false;
+            }
+        }
+
         public async Task<List<ProductAttribute>> GetAllProductAttributesAsync()
         {
             try
@@ -49,6 +66,20 @@ namespace ShopApp.Repositories
                 List<ProductAttribute> productAttributes = new List<ProductAttribute>();
 
                 return productAttributes;
+            }
+        }
+
+        public Task<ProductAttribute> GetProductAttributeByIdAsync(int id)
+        {
+            try
+            {
+                return _db.ProductAttributes.Include(x => x.AttributesTemplate).FirstOrDefaultAsync(x => x.Id == id);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetProductAttributeByIdAsync method error");
+
+                return null;
             }
         }
     }

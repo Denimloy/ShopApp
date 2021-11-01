@@ -73,5 +73,44 @@ namespace ShopApp.Areas.Admin.Controllers
 
             return View(productAttributes);
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var productAttribute = await _productAttributes.GetProductAttributeByIdAsync(id);
+
+            var categories = await _categories.GetAllSubcategoriesAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+
+            var attributesTemplates = await _attributesTemplates.GetAttributesTemplatesByCategoryIdAsync((int)productAttribute.AttributesTemplate.CategoryId);
+            ViewBag.AttributesTemplates = new SelectList(attributesTemplates, "Id", "Name");
+
+            CreateProductAttributeViewModel model = new CreateProductAttributeViewModel { ProductAttribute = productAttribute };
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(CreateProductAttributeViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                bool result = await _productAttributes.EditAsync(model.ProductAttribute);
+                if(result)
+                {
+                    return RedirectToAction("GetAllProductAttributes");
+                }
+
+                return StatusCode(500);
+            }
+
+            var categories = await _categories.GetAllSubcategoriesAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+
+            var attributesTemplates = await _attributesTemplates.GetAttributesTemplatesByCategoryIdAsync((int)model.CategoryId);
+            ViewBag.AttributesTemplates = new SelectList(attributesTemplates, "Id", "Name");
+
+            return View(model);
+        }
+
     }
 }
