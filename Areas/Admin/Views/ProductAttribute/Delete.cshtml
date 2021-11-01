@@ -1,0 +1,14 @@
+﻿@model ShopApp.Models.ProductAttribute
+
+<div class="form-confirm-delete card" style="width: 18rem;">
+    <div class="card-body">
+        <p class="card-text">Do you want to delete the Product Attribute: <strong>@Model.Value</strong>?</p>
+        <form asp-action="Delete" asp-controller="ProductAttribute" asp-antiforgery="true">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Confirm" />
+                <a class="btn btn-danger" role="button" asp-action="GetAllProductAttributes" asp-controller="ProductAttribute">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+

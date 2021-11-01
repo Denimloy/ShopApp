@@ -108,6 +108,9 @@ namespace ShopApp.Repositories
             {
                 var attributesTemplate = await _db.AttributesTemplates.FirstOrDefaultAsync(x => x.Id == Id);
 
+                _db.AttributesTemplates.Remove(attributesTemplate);
+                await _db.SaveChangesAsync();
+
                 return true;
             }
             catch(Exception ex)

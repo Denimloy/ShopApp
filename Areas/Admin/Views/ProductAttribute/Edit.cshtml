@@ -44,5 +44,6 @@
 </div>
 
 @section scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="/Admin/myscripts/product-attribute-form.js"></script>
 }

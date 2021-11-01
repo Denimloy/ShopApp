@@ -14,5 +14,7 @@ namespace ShopApp.Interfaces
         Task<ProductAttribute> GetProductAttributeByIdAsync(int id);
 
         Task<bool> EditAsync(ProductAttribute productAttribute);
+
+        Task<bool> DeleteAsync(int id);
     }
 }

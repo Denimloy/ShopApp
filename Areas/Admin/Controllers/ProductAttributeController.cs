@@ -18,12 +18,14 @@ namespace ShopApp.Areas.Admin.Controllers
         private readonly IProductAttributeRepository _productAttributes;
         private readonly IAttributesTemplateRepository _attributesTemplates;
         private readonly ICategoryRepository _categories;
+
         public ProductAttributeController(IProductAttributeRepository productAttributeRepository, IAttributesTemplateRepository attributesTemplateRepository,ICategoryRepository categoryRepository)
         {
             _categories = categoryRepository;
             _attributesTemplates = attributesTemplateRepository;
             _productAttributes = productAttributeRepository;
         }
+
         public async Task<IActionResult> Create()
         {
             var categories = await _categories.GetAllSubcategoriesAsync();
@@ -31,6 +33,7 @@ namespace ShopApp.Areas.Admin.Controllers
 
             return View();
         }
+
         [HttpGet]
         [Route("admin/ProductAttribute/_GetAttributesTemplatesPartial/{categoryId}")]
         public async Task<IActionResult> _GetAttributesTemplatesPartial(int categoryId)
@@ -40,6 +43,7 @@ namespace ShopApp.Areas.Admin.Controllers
 
             return PartialView();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProductAttributeViewModel model)
@@ -67,6 +71,7 @@ namespace ShopApp.Areas.Admin.Controllers
             return View(model);
 
         }
+
         public async Task<IActionResult> GetAllProductAttributes()
         {
             var productAttributes = await _productAttributes.GetAllProductAttributesAsync();
@@ -88,6 +93,7 @@ namespace ShopApp.Areas.Admin.Controllers
 
             return View(model);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CreateProductAttributeViewModel model)
@@ -110,6 +116,30 @@ namespace ShopApp.Areas.Admin.Controllers
             ViewBag.AttributesTemplates = new SelectList(attributesTemplates, "Id", "Name");
 
             return View(model);
+        }
+
+        [HttpGet]
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(int id)
+        {
+            ProductAttribute productAttribute = await _productAttributes.GetProductAttributeByIdAsync(id);
+            return View(productAttribute);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            bool result = await _productAttributes.DeleteAsync(id);
+            if (result)
+            {
+                return RedirectToAction("GetAllProductAttributes");
+            }
+            else
+            {
+                return StatusCode(500);
+            }
         }
 
     }

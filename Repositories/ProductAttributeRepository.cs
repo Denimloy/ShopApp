@@ -36,6 +36,25 @@ namespace ShopApp.Repositories
             }
         }
 
+        public async Task<bool> DeleteAsync(int id)
+        {
+            try
+            {
+                var productAttribute = await _db.ProductAttributes.FirstOrDefaultAsync(x => x.Id == id);
+
+                _db.ProductAttributes.Remove(productAttribute);
+                await _db.SaveChangesAsync();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "DeleteAsync method error");
+
+                return false;
+            }
+        }
+
         public async Task<bool> EditAsync(ProductAttribute productAttribute)
         {
             try
@@ -47,7 +66,7 @@ namespace ShopApp.Repositories
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, "GetAllProductAttributesAsync method error");
+                _logger.LogError(ex, "EditAsync method error");
 
                 return false;
             }
