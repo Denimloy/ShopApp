@@ -1,20 +1,16 @@
 [
   {
-    "outputFileName": "wwwroot/Admin/css/admin-bundle.css",
-    "inputFiles": [
-      "wwwroot/Admin/css/admin-style.css",
-      "wwwroot/Admin/css/categories-title-form.css",
-      "wwwroot/Admin/css/category-form.css",
-      "wwwroot/Admin/css/category-image-form.css",
-      "wwwroot/Admin/css/delete.css",
-      "wwwroot/Admin/css/attributes-template-form.css"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/css/bundle.css",
     "inputFiles": [
       "wwwroot/css/login-form.css",
       "wwwroot/css/style.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Admin/css/admin-bundle.css",
+    "inputFiles": [
+      "wwwroot/Admin/css/admin-style.css",
+      "wwwroot/Admin/css/form.css"
     ]
   }
 ]

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ShopApp.Interfaces;
 using ShopApp.Models;
+using ShopApp.Data;
 
 namespace ShopApp.Repositories
 {
@@ -52,6 +53,22 @@ namespace ShopApp.Repositories
                 return attributesTemplates;
             }
         }
+        public async Task<List<AttributesTemplate>> GetAttributesTemplatesByCategoryIdAsync(int categoryId)
+        {
+            try
+            {
+                return await _db.AttributesTemplates.Where(x => x.CategoryId == categoryId).AsNoTracking().ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAttributesTemplatesByCategoryIdAsync method error");
+
+                List<AttributesTemplate> attributesTemplates = new List<AttributesTemplate>();
+
+                return attributesTemplates;
+            }
+        }
+
         public async Task<AttributesTemplate> GetAttributesTemplateByIdAsync(int id)
         {
             try

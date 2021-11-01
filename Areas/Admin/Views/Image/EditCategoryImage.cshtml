@@ -4,8 +4,8 @@
 }
 
 <div class="row">
-    <div class="col-md-4" id="image_form">
-        <h4 class="image_form_title">Category Image</h4>
+    <div class="col-md-4" id="form">
+        <h4 class="form_title">Category Image</h4>
         <hr />
         <br />
         <form id="" asp-action="EditCategoryImage" asp-antiforgery="true" enctype="multipart/form-data">
@@ -22,7 +22,7 @@
             <hr />
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Submit</button>
-                <a class="btn btn-danger" asp-action="EditCategory" asp-controller="Category" asp-route-categoryId="@ViewBag.CategoryId" role="button">Cancel</a>
+                <a class="btn btn-danger" asp-action="EditMainCategory" asp-controller="Category" asp-route-categoryId="@ViewBag.CategoryId" role="button">Cancel</a>
             </div>
             <br />
         </form>

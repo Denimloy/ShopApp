@@ -1,0 +1,12 @@
+﻿@model ShopApp.ViewModels.CreateProductAttributeViewModel
+
+    <div id="attributes-templates">
+        <div class="form-group">
+            <label asp-for="ProductAttribute.AttributesTemplateId" class="control-label"></label>
+            <select id="categories-title" asp-for="ProductAttribute.AttributesTemplateId" class="form-select" asp-items="ViewBag.AttributesTemplates">
+                <option selected="selected" disabled="disabled"> Please choose a Attributes Template</option>
+            </select>
+            <span asp-validation-for="ProductAttribute.AttributesTemplateId" class="text-danger"></span>
+        </div>
+    </div>
+

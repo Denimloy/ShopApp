@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('div#category_form form').submit(function () {
+    $('div#form form').submit(function () {
         return SubcategoryValidation();
     });
 });

@@ -41,7 +41,7 @@ namespace ShopApp.Areas.Admin.Controllers
 
             return View();
         }
-        public IActionResult EditMainCategoryImage(int categoryId)
+        public IActionResult EditCategoryImage(int categoryId)
         {
             HttpContext.Session.SetInt32("categoryId", categoryId);
             ViewBag.CategoryId = categoryId;
@@ -49,7 +49,7 @@ namespace ShopApp.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditMainCategoryImage(CreateCategoryImageViewModel model)
+        public async Task<IActionResult> EditCategoryImage(CreateCategoryImageViewModel model)
         {
             int categoryId = (int)HttpContext.Session.GetInt32("categoryId");
 

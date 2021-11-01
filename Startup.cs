@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
 using ShopApp.Services;
+using ShopApp.Data;
 
 namespace ShopApp
 {
@@ -47,6 +48,7 @@ namespace ShopApp
             services.AddScoped<FileSystemRepository>();
             services.AddTransient<ErrorServis>();
             services.AddScoped<IAttributesTemplateRepository, AttributesTemplateRepository>();
+            services.AddScoped<IProductAttributeRepository, ProductAttributeRepository>();
 
             services.AddDistributedMemoryCache();
             services.AddSession();

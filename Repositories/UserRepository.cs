@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using ShopApp.Interfaces;
 using ShopApp.Models;
 using ShopApp.ViewModels;
+using ShopApp.Data;
 
 namespace ShopApp.Repositories
 {

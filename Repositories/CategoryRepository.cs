@@ -7,6 +7,7 @@ using ShopApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
+using ShopApp.Data;
 
 namespace ShopApp.Repositories
 {

@@ -9,8 +9,11 @@ namespace ShopApp.Models
     public class ProductAttribute
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "The field is required")]
+        [Required]
+        [Display(Name = "Name")]
         public string Value { get; set; }
+        [Required]
+        [Display(Name = "Attributes Template")]
         public int? AttributesTemplateId { get; set; }
         public AttributesTemplate AttributesTemplate { get; set; }
         public ICollection<Product> Products { get; set; }

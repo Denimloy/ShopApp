@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ShopApp.Interfaces;
 using ShopApp.Models;
+using ShopApp.Data;
 
 namespace ShopApp.Repositories
 {
