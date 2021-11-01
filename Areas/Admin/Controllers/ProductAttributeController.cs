@@ -67,5 +67,11 @@ namespace ShopApp.Areas.Admin.Controllers
             return View(model);
 
         }
+        public async Task<IActionResult> GetAllProductAttributes()
+        {
+            var productAttributes = await _productAttributes.GetAllProductAttributesAsync();
+
+            return View(productAttributes);
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace ShopApp.Interfaces
     public interface IProductAttributeRepository
     {
         Task<bool> CreateAsync(ProductAttribute productAttribute);
+        Task<List<ProductAttribute>> GetAllProductAttributesAsync();
     }
 }

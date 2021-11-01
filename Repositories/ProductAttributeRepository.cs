@@ -6,6 +6,7 @@ using ShopApp.Interfaces;
 using ShopApp.Models;
 using ShopApp.Data;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShopApp.Repositories
 {
@@ -32,6 +33,22 @@ namespace ShopApp.Repositories
                 _logger.LogError(ex, "CreateAsync method error");
 
                 return false;
+            }
+        }
+
+        public async Task<List<ProductAttribute>> GetAllProductAttributesAsync()
+        {
+            try
+            {
+                return await _db.ProductAttributes.AsNoTracking().ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAllProductAttributesAsync method error");
+
+                List<ProductAttribute> productAttributes = new List<ProductAttribute>();
+
+                return productAttributes;
             }
         }
     }
