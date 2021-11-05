@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using ShopApp.Data;
+using ShopApp.Services;
 
 namespace ShopApp.Repositories
 {
@@ -16,8 +17,11 @@ namespace ShopApp.Repositories
         private readonly AppDbContext _db;
         private readonly FileSystemRepository _fileSystem;
         private readonly ILogger _logger;
-        public CategoryRepository(AppDbContext appDbContext, FileSystemRepository fileSystem, ILogger<CategoryRepository> logger)
+        private readonly TextEditor _textEditor;
+
+        public CategoryRepository(AppDbContext appDbContext, FileSystemRepository fileSystem, ILogger<CategoryRepository> logger, TextEditor textEditor)
         {
+            this._textEditor = textEditor;
             this._logger = logger;
             this._fileSystem = fileSystem;
             this._db = appDbContext;
@@ -27,7 +31,7 @@ namespace ShopApp.Repositories
         {
             try
             {
-                category.Name = await Task.Run(() => PrepareCategoryNameForSaving(category.Name));
+                category.Name = await Task.Run(() => _textEditor.CapitalizeEachWord(category.Name).ToString());
 
                 _db.Categories.Add(category);
                 await _db.SaveChangesAsync();
@@ -134,28 +138,6 @@ namespace ShopApp.Repositories
 
 
         }
-        private static string PrepareCategoryNameForSaving(string categoryName)
-        {
-            //Create an array of strings by spaces and remove extra spaces
-            string[] stringArray = categoryName.ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            string correctedCategoryName = "";
-            char space = ' ';
-            //Capitalize each word
-            foreach (var item in stringArray)
-            {
-                if (item.Length > 1)
-                {
-                    correctedCategoryName += char.ToUpper(item[0]) + item.Substring(1) + " ";
-                }
-                else
-                {
-                    correctedCategoryName += item.ToUpper() + " ";
-                }
-            }
-
-            return correctedCategoryName.TrimEnd(space);
-        }
-
         public async Task<Category> GetCategoryByIdAsync(int categoryId)
         {
             try

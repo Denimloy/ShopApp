@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using ShopApp.Interfaces;
 using ShopApp.Models;
 using ShopApp.Data;
+using ShopApp.Services;
 
 namespace ShopApp.Repositories
 {
@@ -14,9 +15,12 @@ namespace ShopApp.Repositories
     {
         private readonly AppDbContext _db;
         private readonly ILogger _logger;
+        private readonly TextEditor _textEditor;
 
-        public AttributesTemplateRepository(AppDbContext appDbContext, ILogger<AttributesTemplateRepository> logger)
+
+        public AttributesTemplateRepository(AppDbContext appDbContext, ILogger<AttributesTemplateRepository> logger, TextEditor textEditor)
         {
+            this._textEditor = textEditor;
             this._db = appDbContext;
             this._logger = logger;
         }
@@ -24,7 +28,7 @@ namespace ShopApp.Repositories
         {
             try
             {
-                attributesTemplate.Name = await Task.Run(() => PrepareAttributesTemplateForSaving(attributesTemplate.Name));
+                attributesTemplate.Name = await Task.Run(() => _textEditor.CapitalizeEachWord(attributesTemplate.Name).ToString());
 
                 _db.AttributesTemplates.Add(attributesTemplate);
                 await _db.SaveChangesAsync();
@@ -86,7 +90,7 @@ namespace ShopApp.Repositories
         {
             try
             {
-                attributesTemplate.Name = await Task.Run(() => PrepareAttributesTemplateForSaving(attributesTemplate.Name));
+                attributesTemplate.Name = await Task.Run(() => _textEditor.CapitalizeEachWord(attributesTemplate.Name).ToString());
 
                 _db.AttributesTemplates.Update(attributesTemplate);
                 await _db.SaveChangesAsync();
@@ -120,27 +124,5 @@ namespace ShopApp.Repositories
                 return false;
             }
         }
-
-        private static string PrepareAttributesTemplateForSaving(string templateName)
-        {
-            //Create an array of strings by spaces and remove extra spaces
-            string[] stringArray = templateName.ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            string correctedTemplateName = "";
-            char space = ' ';
-            //Capitalize each word
-            foreach (var item in stringArray)
-            {
-                if (item.Length > 1)
-                {
-                    correctedTemplateName += char.ToUpper(item[0]) + item.Substring(1) + " ";
-                }
-                else
-                {
-                    correctedTemplateName += item.ToUpper() + " ";
-                }
-            }
-            return correctedTemplateName.TrimEnd(space);
-        }
-
     }
 }

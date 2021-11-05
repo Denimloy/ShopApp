@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShopApp.Models;
+using ShopApp.Data;
 
 namespace ShopApp.Data
 {
@@ -41,10 +41,12 @@ namespace ShopApp.Data
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -162,6 +164,7 @@ namespace ShopApp.Data
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("AttributesTemplateId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
@@ -287,7 +290,9 @@ namespace ShopApp.Data
                 {
                     b.HasOne("ShopApp.Models.AttributesTemplate", "AttributesTemplate")
                         .WithMany("ProductAttributes")
-                        .HasForeignKey("AttributesTemplateId");
+                        .HasForeignKey("AttributesTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AttributesTemplate");
                 });

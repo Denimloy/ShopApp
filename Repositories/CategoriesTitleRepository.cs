@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using ShopApp.Interfaces;
 using ShopApp.Models;
 using ShopApp.Data;
+using System.Text;
+using ShopApp.Services;
 
 namespace ShopApp.Repositories
 {
@@ -14,9 +16,11 @@ namespace ShopApp.Repositories
     {
         private readonly AppDbContext _db;
         private readonly ILogger _logger;
+        private readonly TextEditor _textEditor;
 
-        public CategoriesTitleRepository(AppDbContext appDbContext, ILogger<CategoriesTitleRepository> logger)
+        public CategoriesTitleRepository(AppDbContext appDbContext, ILogger<CategoriesTitleRepository> logger, TextEditor textEditor)
         {
+            this._textEditor = textEditor;
             this._logger = logger;
             this._db = appDbContext;
         }
@@ -24,7 +28,7 @@ namespace ShopApp.Repositories
         {
             try
             {
-                categoriesTitle.Name = await Task.Run(() => PrepareTitleNameForSaving(categoriesTitle.Name));
+                categoriesTitle.Name = await Task.Run(() => _textEditor.CapitalizeEachWord(categoriesTitle.Name).ToString());
 
                 _db.CategoriesTitles.Add(categoriesTitle);
                 await _db.SaveChangesAsync();
@@ -53,26 +57,6 @@ namespace ShopApp.Repositories
 
                 return categoriesTitles;
             }
-        }
-        private static string PrepareTitleNameForSaving(string titleName)
-        {
-            //Create an array of strings by spaces and remove extra spaces
-            string[] stringArray = titleName.ToLower().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            string correctedTitleName = "";
-            char space = ' ';
-            //Capitalize each word
-            foreach (var item in stringArray)
-            {
-                if (item.Length > 1)
-                {
-                    correctedTitleName += char.ToUpper(item[0]) + item.Substring(1) + " ";
-                }
-                else
-                {
-                    correctedTitleName += item.ToUpper() + " ";
-                }
-            }
-            return correctedTitleName.TrimEnd(space);
         }
     }
 }

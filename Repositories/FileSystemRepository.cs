@@ -39,10 +39,10 @@ namespace ShopApp.Repositories
         private void CheckDirectoryExistence(string directoryName)
         {
             string directoryPath = _appEnvironment.WebRootPath + $"\\images\\{directoryName}";
-            DirectoryInfo dirInfo = new DirectoryInfo(directoryPath);
-            if (!dirInfo.Exists)
+            DirectoryInfo directory = new DirectoryInfo(directoryPath);
+            if (!directory.Exists)
             {
-                dirInfo.Create();
+                directory.Create();
             }
         }
 
@@ -76,10 +76,10 @@ namespace ShopApp.Repositories
         }
         private void DeleteImageFile(string path)
         {
-            FileInfo fileInfo = new(_appEnvironment.WebRootPath + path);
-            if (fileInfo.Exists)
+            FileInfo file = new FileInfo(_appEnvironment.WebRootPath + path);
+            if (file.Exists)
             {
-                fileInfo.Delete();
+                file.Delete();
             }
         }
     }
