@@ -12,8 +12,8 @@ namespace ShopApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ErrorServis _error; 
-        public HomeController(ErrorServis errorServis)
+        private readonly ErrorService _error; 
+        public HomeController(ErrorService errorServis)
         {
             this._error = errorServis;
         }

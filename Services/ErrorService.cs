@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 
 namespace ShopApp.Services
 {
-    public class ErrorServis
+    public class ErrorService
     {
         private readonly ILogger _logger;
-        public ErrorServis(ILogger<ErrorServis> logger)
+        public ErrorService(ILogger<ErrorService> logger)
         {
             _logger = logger;
         }

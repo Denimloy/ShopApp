@@ -16,9 +16,9 @@ namespace ShopApp.Repositories
     {
         private readonly AppDbContext _db;
         private readonly ILogger _logger;
-        private readonly TextEditor _textEditor;
+        private readonly TextEditorService _textEditor;
 
-        public CategoriesTitleRepository(AppDbContext appDbContext, ILogger<CategoriesTitleRepository> logger, TextEditor textEditor)
+        public CategoriesTitleRepository(AppDbContext appDbContext, ILogger<CategoriesTitleRepository> logger, TextEditorService textEditor)
         {
             this._textEditor = textEditor;
             this._logger = logger;

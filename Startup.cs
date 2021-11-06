@@ -46,7 +46,8 @@ namespace ShopApp
             services.AddScoped<ICategoriesTitleRepository, CategoriesTitleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<FileSystemRepository>();
-            services.AddTransient<ErrorServis>();
+            services.AddTransient<ErrorService>();
+            services.AddTransient<TextEditorService>();
             services.AddScoped<IAttributesTemplateRepository, AttributesTemplateRepository>();
             services.AddScoped<IProductAttributeRepository, ProductAttributeRepository>();
 

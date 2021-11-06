@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShopApp.Services
 {
-    public class TextEditor
+    public class TextEditorService
     {
         public StringBuilder CapitalizeEachWord(string someString)
         {

@@ -15,10 +15,10 @@ namespace ShopApp.Repositories
     {
         private readonly AppDbContext _db;
         private readonly ILogger _logger;
-        private readonly TextEditor _textEditor;
+        private readonly TextEditorService _textEditor;
 
 
-        public AttributesTemplateRepository(AppDbContext appDbContext, ILogger<AttributesTemplateRepository> logger, TextEditor textEditor)
+        public AttributesTemplateRepository(AppDbContext appDbContext, ILogger<AttributesTemplateRepository> logger, TextEditorService textEditor)
         {
             this._textEditor = textEditor;
             this._db = appDbContext;
