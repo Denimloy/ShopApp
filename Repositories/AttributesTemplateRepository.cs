@@ -61,7 +61,7 @@ namespace ShopApp.Repositories
         {
             try
             {
-                return await _db.AttributesTemplates.Where(x => x.CategoryId == categoryId).AsNoTracking().ToListAsync();
+                return await _db.AttributesTemplates.Where(x => x.CategoryId == categoryId).Include(x => x.ProductAttributes).AsNoTracking().ToListAsync();
             }
             catch(Exception ex)
             {

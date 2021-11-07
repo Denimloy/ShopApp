@@ -1,7 +1,7 @@
 ﻿//add partial view _GetAttributesTemplatesPartial to the form after the selected category
 $(function () {
 
-    $('#select-category').change(function () {
+    $('#selected-category').change(function () {
         // get selected categoryId
         var categoryId = $(this).val();
         $.ajax({

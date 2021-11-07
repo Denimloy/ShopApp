@@ -50,6 +50,7 @@ namespace ShopApp
             services.AddTransient<TextEditorService>();
             services.AddScoped<IAttributesTemplateRepository, AttributesTemplateRepository>();
             services.AddScoped<IProductAttributeRepository, ProductAttributeRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddDistributedMemoryCache();
             services.AddSession();

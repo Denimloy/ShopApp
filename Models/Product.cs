@@ -21,7 +21,7 @@ namespace ShopApp.Models
 
         [Required]
         [Display(Name = "Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
         public ICollection<ProductAttribute> ProductAttributes { get; set; }
         public ICollection<Image> Images { get; set; }

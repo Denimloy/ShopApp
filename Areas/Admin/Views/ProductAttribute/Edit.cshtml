@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label asp-for="ProductAttribute.AttributesTemplateId" class="control-label"></label>
                         <select asp-for="ProductAttribute.AttributesTemplateId" class="form-select" asp-items="ViewBag.AttributesTemplates">
-                            <option selected="selected" disabled="disabled"> Please choose a Attributes Template</option>
+                            <option selected="selected" value="" hidden></option>
                         </select>
                         <span asp-validation-for="ProductAttribute.AttributesTemplateId" class="text-danger"></span>
                     </div>

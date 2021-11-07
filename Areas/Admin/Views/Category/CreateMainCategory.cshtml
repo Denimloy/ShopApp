@@ -13,7 +13,7 @@
                 <label asp-for="CategoriesTitleId" class="control-label"></label>
                 <a class="link" asp-controller="CategoriesTitle" asp-action="Create">Create a new Categories Title</a>
                 <select id="categories-title" asp-for="CategoriesTitleId" class="form-select" asp-items="ViewBag.CategoriesTitles">
-                    <option selected="selected" disabled="disabled" value="0"> Please choose a Category Title</option>
+                    <option selected="selected" value="" hidden></option>
                 </select>
                 <span asp-validation-for="CategoriesTitleId" class="text-danger"></span>
                 <span id="error-message" class="text-danger"></span>

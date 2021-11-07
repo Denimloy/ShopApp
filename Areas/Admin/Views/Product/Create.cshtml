@@ -1,0 +1,76 @@
+﻿@model ShopApp.ViewModels.CreateProductViewModel
+@{
+    ViewBag.Title = "Admin - Create Product";
+}
+
+<div class="row">
+    <div class="col-md-6" id="form">
+        <h4 class="form_title">Product</h4>
+        <hr />
+        <br />
+        <form asp-action="Create" asp-antiforgery="true">
+            <div class="form-group">
+                <label asp-for="Product.Name" class="control-label">Name</label><br />
+                <input type="text" asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price" class="control-label">Price</label><br />
+                <input type="number" asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.CategoryId" class="control-label">Category</label><br />
+                <select id="selected-category" asp-for="Product.CategoryId" asp-items="ViewBag.Сategories" class="form-select">
+                    <option selected="selected" value="" hidden></option>
+                </select>
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+            </div>
+            @if (Model?.AttributesTemplates != null)
+            {
+                <div id="product-attributes">
+                    @for (int i = 0; i < Model.AttributesTemplates.Count; i++)
+                    {<div class="form-group">
+                            <label class="control-label">@Model.AttributesTemplates[i].Name</label>
+                            <select asp-for="selectedProductAttributeId[i]" class="form-select">
+                                <option selected="selected" value="0" hidden></option>
+                                @foreach (var productAttributes in Model.AttributesTemplates[i].ProductAttributes)
+                                {
+                                    if (Model.selectedProductAttributeId.Contains(productAttributes.Id))
+                                    {
+                                        <option value="@productAttributes.Id" selected="selected"> @productAttributes.Value</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@productAttributes.Id"> @productAttributes.Value</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="selectedProductAttributeId[i]" class="text-danger"></span>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div id="product-attributes"></div>
+            }
+            <div class="form-group">
+                <label asp-for="Product.Description" class="control-label">Description</label><br />
+                <textarea asp-for="Product.Description" rows="7" class="form-control"></textarea>
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+            <br />
+            <hr />
+            <div class="d-grid gap-2 d-md-block form-group">
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <a class="btn btn-danger" asp-controller="Home" asp-action="Index" role="button">Cancel</a>
+            </div>
+            <br />
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="/Admin/myscripts/product-form.js"></script>
+}

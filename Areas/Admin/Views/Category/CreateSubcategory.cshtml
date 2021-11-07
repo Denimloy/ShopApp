@@ -13,7 +13,7 @@
                 <label asp-for="ParentId" class="control-label"></label>
                 <a class="link" asp-action="CreateCategory">Create new Main Category</a>
                 <select id="main-category" asp-for="ParentId" class="form-select" asp-items="ViewBag.Categories">
-                    <option selected="selected" disabled="disabled" value="0"> Please choose a Main Category</option>
+                    <option selected="selected" value="" hidden></option>
                 </select>
                 <span asp-validation-for="ParentId" class="text-danger"></span>
                 <span id="error-message" class="text-danger"></span>
