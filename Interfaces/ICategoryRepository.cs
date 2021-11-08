@@ -8,12 +8,12 @@ namespace ShopApp.Interfaces
 {
     public interface ICategoryRepository
     {
-        Task<List<Category>> GetAllMainCategoriesAsync();
-        Task<List<Category>> GetAllCategoriesAsync();
+        Task<IEnumerable<Category>> GetAllMainCategoriesAsync();
+        Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<Category> GetCategoryByIdAsync(int categoryId);
         Task<bool> CreateAsync(Category category);
         Task<bool> EditAsync(Category category);
         Task<bool> DeleteAsync(int categoryId);
-        Task<List<Category>> GetAllSubcategoriesAsync();
+        Task<IEnumerable<Category>> GetAllSubcategoriesAsync();
     }
 }

@@ -34,5 +34,21 @@ namespace ShopApp.Repositories
                 return false;
             }
         }
+
+        public async Task<IEnumerable<Product>> GetAllAsync()
+        {
+            try
+            {
+                return await Task.Run(() => _db.Products);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetAllAsync method error");
+
+                List<Product> products = new List<Product>();
+
+                return products;
+            }
+        }
     }
 }

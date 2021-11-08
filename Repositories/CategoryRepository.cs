@@ -100,13 +100,13 @@ namespace ShopApp.Repositories
             }
         }
 
-        public async Task<List<Category>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
             try
             {
-                return await _db.Categories.AsNoTracking().ToListAsync();
+                return await Task.Run(() => _db.Categories.AsNoTracking());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "GetAllCategoriesAsync method error");
 
@@ -117,15 +117,14 @@ namespace ShopApp.Repositories
 ;
         }
 
-        public async Task<List<Category>> GetAllMainCategoriesAsync()
+        public async Task<IEnumerable<Category>> GetAllMainCategoriesAsync()
         {
             try
             {
-                return await _db.Categories
+                return await Task.Run(() => _db.Categories
                     .Where(x => x.Parent == null)
                     .Include(x => x.Children)
-                    .AsNoTracking()
-                    .ToListAsync();
+                    .AsNoTracking());
             }
             catch(Exception ex)
             {
@@ -154,17 +153,18 @@ namespace ShopApp.Repositories
             }
         }
 
-        public async Task<List<Category>> GetAllSubcategoriesAsync()
+        public async Task<IEnumerable<Category>> GetAllSubcategoriesAsync()
         {
             try
             {
-                return await _db.Categories.Where(x => x.ParentId != null).AsNoTracking().ToListAsync();
+                return await Task.Run(() => _db.Categories.Where(x => x.ParentId != null).AsNoTracking());
             }
             catch(Exception ex)
             {
                 _logger.LogError(ex, "GetAllSubcategoriesAsync method error");
 
                 List<Category> categories = new List<Category>();
+
                 return categories;
             }
         }

@@ -72,11 +72,11 @@ namespace ShopApp.Repositories
             }
         }
 
-        public async Task<List<ProductAttribute>> GetAllProductAttributesAsync()
+        public async Task<IEnumerable<ProductAttribute>> GetAllProductAttributesAsync()
         {
             try
             {
-                return await _db.ProductAttributes.AsNoTracking().ToListAsync();
+                return await Task.Run(() => _db.ProductAttributes.AsNoTracking());
             }
             catch(Exception ex)
             {
@@ -99,6 +99,22 @@ namespace ShopApp.Repositories
                 _logger.LogError(ex, "GetProductAttributeByIdAsync method error");
 
                 return null;
+            }
+        }
+
+        public async Task<IEnumerable<ProductAttribute>> GetRangeByIdAsync(int[] identifiers)
+        {
+            try
+            {
+                return await Task.Run(() => _db.ProductAttributes.AsNoTracking().Where(x => identifiers.Contains(x.Id)));
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "GetRangeByIdAsync method error");
+
+                List<ProductAttribute> productAttributes = new List<ProductAttribute>();
+
+                return productAttributes;
             }
         }
     }

@@ -9,5 +9,6 @@ namespace ShopApp.Interfaces
     public interface IProductRepository
     {
         Task<bool> CreateAsync(Product product);
+        Task<IEnumerable<Product>> GetAllAsync();
     }
 }

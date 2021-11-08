@@ -18,8 +18,10 @@ namespace ShopApp.Areas.Admin.Controllers
         private readonly ICategoryRepository _categories;
         private readonly IProductRepository _products;
         private readonly IAttributesTemplateRepository _attributesTemplates;
-        public ProductController(ICategoryRepository category, IProductRepository products, IAttributesTemplateRepository attributesTemplates)
+        private readonly IProductAttributeRepository _productAttributes;
+        public ProductController(ICategoryRepository category, IProductRepository products, IAttributesTemplateRepository attributesTemplates, IProductAttributeRepository productAttributes)
         {
+            this._productAttributes = productAttributes;
             this._attributesTemplates = attributesTemplates;
             this._products = products;
             this._categories = category;
@@ -56,7 +58,15 @@ namespace ShopApp.Areas.Admin.Controllers
             }
             if(ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                model.Product.ProductAttributes.AddRange(await _productAttributes.GetRangeByIdAsync(model.selectedProductAttributeId));
+
+                bool result = await _products.CreateAsync(model.Product);
+                if(result)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return StatusCode(500);
             }
             if(model.Product.CategoryId != null)
             {

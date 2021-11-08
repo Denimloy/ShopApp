@@ -43,11 +43,11 @@ namespace ShopApp.Repositories
             }
         }
 
-        public async Task<List<CategoriesTitle>> GetAllCategoriesTitlesAsync()
+        public async Task<IEnumerable<CategoriesTitle>> GetAllCategoriesTitlesAsync()
         {
             try
             {
-                return await _db.CategoriesTitles.AsNoTracking().ToListAsync();
+                return await Task.Run(() => _db.CategoriesTitles.AsNoTracking());
             }
             catch(Exception ex)
             {

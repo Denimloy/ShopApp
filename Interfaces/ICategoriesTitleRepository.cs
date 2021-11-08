@@ -8,7 +8,7 @@ namespace ShopApp.Interfaces
 {
     public interface ICategoriesTitleRepository
     {
-        Task<List<CategoriesTitle>> GetAllCategoriesTitlesAsync();
+        Task<IEnumerable<CategoriesTitle>> GetAllCategoriesTitlesAsync();
         Task<bool> CreateAsync(CategoriesTitle categoriesTitle);
     }
 }

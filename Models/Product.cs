@@ -13,6 +13,7 @@ namespace ShopApp.Models
         [StringLength(40, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 3)]
         public string Name { get; set; }
         [Required]
+        [Range(0, 100000)]
         public int? Price { get; set; }
 
         [Required]
@@ -23,7 +24,7 @@ namespace ShopApp.Models
         [Display(Name = "Category")]
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
-        public ICollection<ProductAttribute> ProductAttributes { get; set; }
+        public List<ProductAttribute> ProductAttributes { get; set; }
         public ICollection<Image> Images { get; set; }
         public Product()
         {

@@ -42,11 +42,11 @@ namespace ShopApp.Repositories
                 return false;
             }
         }
-        public async Task<List<AttributesTemplate>> GetAllAttributesTemplatesAsync()
+        public async Task<IEnumerable<AttributesTemplate>> GetAllAttributesTemplatesAsync()
         {
             try
             {
-                return await _db.AttributesTemplates.AsNoTracking().ToListAsync();
+                return await Task.Run(() => _db.AttributesTemplates.AsNoTracking());
             }
             catch(Exception ex)
             {
@@ -57,11 +57,11 @@ namespace ShopApp.Repositories
                 return attributesTemplates;
             }
         }
-        public async Task<List<AttributesTemplate>> GetAttributesTemplatesByCategoryIdAsync(int categoryId)
+        public async Task<IEnumerable<AttributesTemplate>> GetAttributesTemplatesByCategoryIdAsync(int categoryId)
         {
             try
             {
-                return await _db.AttributesTemplates.Where(x => x.CategoryId == categoryId).Include(x => x.ProductAttributes).AsNoTracking().ToListAsync();
+                return await Task.Run(() => _db.AttributesTemplates.Where(x => x.CategoryId == categoryId).Include(x => x.ProductAttributes).AsNoTracking());
             }
             catch(Exception ex)
             {
